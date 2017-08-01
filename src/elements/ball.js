@@ -29,18 +29,20 @@ class Ball {
   }
 
   move() {
-    this.correctDirection();
+    if(this.touchedGround()) {
+      return false;
+    }
 
+    this.correctDirection();
     this.center = {
       x: this.center.x - this.delta.x,
       y: this.center.y - this.delta.y
     }
+    return true;
   }
 
   correctDirection() {
-    if(this.touchedGround()) {
-      console.log('you lost');
-    } else if(this.touchedControl()){
+    if(this.touchedControl()){
       this.delta.y = -this.delta.y;
       const color = this.color;
       this.control.color = 'red';
@@ -68,10 +70,25 @@ class Ball {
 
   touchedControl() {
     const control = this.control;
-    if(control.position.x <= this.center.x
-      && this.center.x <= control.position.x + control.width
-      && control.position.y <= this.center.y + this.radius
+    if(control.position.x < this.center.x
+      && this.center.x < control.position.x + control.width
+      && control.position.y < this.center.y + this.radius
     ) return true;
+    return false;
+  }
+
+  hitBrick(bricks) {
+    for(let i in bricks) {
+      const brick = bricks[i];
+      let ballX, ballY, brickX, brickY;
+      [ballX, ballY] = [this.center.x, this.center.y];
+      [brickX, brickY] = [brick.position.x, brick.position.y];
+      if(brickX < ballX && ballX < brickX + brick.size.width &&
+        brickY < ballY && ballY < brickY + brick.size.height) {
+          this.delta.y = -this.delta.y;
+          return i;
+      }
+    }
     return false;
   }
 }

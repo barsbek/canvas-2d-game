@@ -19,6 +19,7 @@ class Game {
     }
     this.ctx = canvas.getContext('2d');
     this.bricksNumber = {x: 8, y: 3};
+    this.bricks = [];
   }
 
   start() {
@@ -47,7 +48,6 @@ class Game {
     const margin = {x: 0.2*area.x, y: 0.4*area.y};
     const size = {width: area.x - margin.x, height: area.y - margin.y};
 
-    this.bricks = [];
     for(let x=0; x<this.bricksNumber.x; x++) {
       for(let y=0; y<this.bricksNumber.y; y++) {
         let position = {x: x*area.x + margin.x/2, y: y*area.y+margin.y};
@@ -69,11 +69,22 @@ class Game {
     }
   }
 
+  removeBrick() {
+    let index = this.ball.hitBrick(this.bricks);
+
+    if(index || index === 0) {
+      this.bricks.splice(index, 1);
+    }
+  }
+
   redraw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ball.move();
+
+    let result = this.ball.move();
+    this.removeBrick();
     this.drawElements();
-    requestAnimationFrame(this.redraw.bind(this));
+    if(result)
+      requestAnimationFrame(this.redraw.bind(this));
   }
 
   initListeners() {
