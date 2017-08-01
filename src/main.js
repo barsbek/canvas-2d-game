@@ -34,8 +34,8 @@ class Game {
 
   initElements() {
     this.control = new Control(this.ctx, this.canvas);
-    this.ball = new Ball(this.ctx, this.canvas);
-  }
+    this.ball = new Ball(this.ctx, this.canvas, this.control);
+}
 
   drawElements() {
     this.control.draw();
@@ -57,8 +57,10 @@ class Game {
     });
 
     document.addEventListener('keydown', e => {
-      if(e.keyCode == 'A'.charCodeAt()) this.control.moveLeft();
-      else if(e.keyCode == 'D'.charCodeAt()) this.control.moveRight();
+      if(e.keyCode == 'A'.charCodeAt() || e.keyCode == 37)
+        this.control.moveLeft();
+      else if(e.keyCode == 'D'.charCodeAt() || e.keyCode == 39)
+        this.control.moveRight();
     });
 
     document.addEventListener('keyup', e => {

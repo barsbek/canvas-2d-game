@@ -2,8 +2,8 @@ class Control {
   constructor(ctx, canvas, color='green') {
     this.ctx = ctx;
     this.canvas = canvas;
-    this.width = Math.max(canvas.width/20, 40);
-    this.height = Math.max(canvas.height/20, 10);
+    this.width = Math.max(canvas.width/10, 40);
+    this.height = Math.max(canvas.height/30, 10);
     this.color = color;
     this.position = {
       x: (this.canvas.width - this.width)*0.5,
