@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 const Control = require('./elements/control');
 const Ball = require('./elements/ball');
-
+const Brick = require('./elements/brick');
 
 function init() {
   const canvas = document.querySelector('#plot');
@@ -18,6 +18,7 @@ class Game {
       throw new Error('Canvas element is not found');
     }
     this.ctx = canvas.getContext('2d');
+    this.bricksNumber = {x: 8, y: 3};
   }
 
   start() {
@@ -35,11 +36,37 @@ class Game {
   initElements() {
     this.control = new Control(this.ctx, this.canvas);
     this.ball = new Ball(this.ctx, this.canvas, this.control);
-}
+    this.initBricks();
+  }
+
+  initBricks() {
+    const area = {
+      x: this.canvas.width/this.bricksNumber.x,
+      y: this.canvas.height/this.bricksNumber.y*0.3
+    };
+    const margin = {x: 0.2*area.x, y: 0.4*area.y};
+    const size = {width: area.x - margin.x, height: area.y - margin.y};
+
+    this.bricks = [];
+    for(let x=0; x<this.bricksNumber.x; x++) {
+      for(let y=0; y<this.bricksNumber.y; y++) {
+        let position = {x: x*area.x + margin.x/2, y: y*area.y+margin.y};
+        this.bricks.push(new Brick(position, size));
+      }
+    }
+  }
 
   drawElements() {
     this.control.draw();
     this.ball.draw();
+    this.drawBricks();
+  }
+
+  drawBricks() {
+    for(let i in this.bricks) {
+      const brick = this.bricks[i];
+      brick.draw(this.ctx);
+    }
   }
 
   redraw() {
