@@ -39,6 +39,15 @@ class Control {
 
   move(dx) {
     this.position.x += dx;
+    this.stopOnBorders();
+  }
+
+  stopOnBorders() {
+    if(this.position.x + this.width >= this.canvas.width) {
+      this.position.x = this.canvas.width - this.width;
+    } else if(this.position.x <= 0) {
+      this.position.x = 0;
+    }
   }
 }
 
