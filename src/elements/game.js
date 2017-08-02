@@ -83,7 +83,7 @@ class Game {
     if(!result) result = `Score: ${this.score.value}`;
     else {
       color = 'red';
-      result += ' Press space bar to restart'
+      result += ' Press spacebar to restart'
     }
 
     this.ctx.font = `${this.score.size}px Arial`;
@@ -131,7 +131,6 @@ class Game {
     });
 
     document.addEventListener('keydown', e => {
-      console.log(e.keyCode);
       if(e.keyCode == 'A'.charCodeAt() || e.keyCode == 37)
         this.control.moveLeft();
       else if(e.keyCode == 'D'.charCodeAt() || e.keyCode == 39)
