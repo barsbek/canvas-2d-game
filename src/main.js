@@ -1,8 +1,10 @@
-document.addEventListener('DOMContentLoaded', init);
+const requestAnimationFrame = require('raf');
 
 const Control = require('./elements/control');
 const Ball = require('./elements/ball');
 const Brick = require('./elements/brick');
+
+document.addEventListener('DOMContentLoaded', init);
 
 function init() {
   const canvas = document.querySelector('#plot');

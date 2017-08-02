@@ -1,13 +1,14 @@
 {
   "name": "canvas-2d-game",
   "version": "0.0.1",
-  "description": "",
+  "description": "2d-game example application written in pure js (es6)",
   "main": "main.js",
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
     "file-type": "^5.2.0",
+    "raf": "^3.3.2",
     "webpack": "^3.3.0"
   },
   "devDependencies": {
