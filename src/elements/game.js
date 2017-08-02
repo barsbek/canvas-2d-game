@@ -128,6 +128,11 @@ class Game {
     document.addEventListener('keyup', e => {
       this.control.stop();
     });
+
+    this.canvas.onmousemove = (e) => {
+      this.control.position.x = e.pageX - this.control.width/2;
+      this.control.stopOnBorders();
+    }
   }
 }
 
