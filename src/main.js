@@ -1,4 +1,4 @@
-const requestAnimationFrame = require('raf');
+require('raf').polyfill();
 
 const Game = require('./elements/game');
 
