@@ -17,13 +17,22 @@ class Game {
       position: {x: 10, y: 10},
       size: 0.05*this.canvas.height
     };
+    this.animationFrame = null;
   }
 
   start() {
     this.initCanvas();
     this.initElements();
     this.initListeners();
-    requestAnimationFrame(this.redraw.bind(this));
+    this.animationFrame = requestAnimationFrame(this.redraw.bind(this));
+  }
+
+  restart() {
+    this.score.value = 0;
+    this.bricks = [];
+    this.initElements();
+    cancelAnimationFrame(this.animationFrame);
+    this.animationFrame = requestAnimationFrame(this.redraw.bind(this));
   }
 
   initCanvas() {
@@ -72,7 +81,10 @@ class Game {
   drawResult(result) {
     let color = 'green';
     if(!result) result = `Score: ${this.score.value}`;
-    else color = 'red';
+    else {
+      color = 'red';
+      result += ' Press space bar to restart'
+    }
 
     this.ctx.font = `${this.score.size}px Arial`;
     this.ctx.fillStyle = color;
@@ -102,11 +114,11 @@ class Game {
     this.drawElements();
 
     if(this.win()) {
-      result = 'You win';
+      result = 'You win!';
     } else if(moved) {
-      requestAnimationFrame(this.redraw.bind(this));
+      this.animationFrame = requestAnimationFrame(this.redraw.bind(this));
     } else {
-      result = 'You lost';
+      result = 'You lost!';
     }
     this.drawResult(result);
   }
@@ -119,10 +131,13 @@ class Game {
     });
 
     document.addEventListener('keydown', e => {
+      console.log(e.keyCode);
       if(e.keyCode == 'A'.charCodeAt() || e.keyCode == 37)
         this.control.moveLeft();
       else if(e.keyCode == 'D'.charCodeAt() || e.keyCode == 39)
         this.control.moveRight();
+      else if(e.keyCode == 32)
+        this.restart();
     });
 
     document.addEventListener('keyup', e => {
