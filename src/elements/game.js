@@ -10,7 +10,7 @@ class Game {
       throw new Error('Canvas element is not found');
     }
     this.ctx = canvas.getContext('2d');
-    this.bricksNumber = {x: 2, y: 1};
+    this.bricksNumber = {x: 4, y: 4};
     this.bricks = [];
     this.score = {
       value: 0,
